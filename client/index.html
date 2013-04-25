@@ -1,0 +1,33 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="./msgpack.js"></script>
+</head>
+<body onload="sendMessage()">
+	<form>
+		<input type="button" id="enter" value="Enter">
+	</form>
+
+	<script type="text/javascript">
+	function packData(){
+		var packData = msgpack.pack({'type': 'ほげほげ'});
+		return msgpack.base64encode(packData);
+	}
+		
+	function sendMessage(){
+		$.ajax({
+			url: 'http://localhost:8888/ajax',
+			type: 'POST',
+			cache: false,
+			data: {'data': packData()},
+			success: function(data){
+				alert('Success!')
+			}
+			, error: function(jqXHR, textStatus, err){
+				alert('text status '+textStatus+', err '+err)
+			}
+		})
+	}
+	</script>
+</body>
+</html>
